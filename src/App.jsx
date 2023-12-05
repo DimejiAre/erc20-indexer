@@ -11,12 +11,15 @@ import {
 } from '@chakra-ui/react';
 import { Alchemy, Network, Utils } from 'alchemy-sdk';
 import { useState } from 'react';
+import Header from './components/Header';
+import { useMoralis } from "react-moralis";
 
 function App() {
   const [userAddress, setUserAddress] = useState('');
   const [results, setResults] = useState([]);
   const [hasQueried, setHasQueried] = useState(false);
   const [tokenDataObjects, setTokenDataObjects] = useState([]);
+  const { isWeb3Enabled, account } = useMoralis();
 
   async function getTokenBalance() {
     const config = {
@@ -49,6 +52,7 @@ function App() {
           justifyContent="center"
           flexDirection={'column'}
         >
+          <Header />
           <Heading mb={0} fontSize={36}>
             ERC-20 Token Indexer
           </Heading>
@@ -75,6 +79,7 @@ function App() {
           p={4}
           bgColor="white"
           fontSize={24}
+          value={isWeb3Enabled? account: ""}
         />
         <Button fontSize={20} onClick={getTokenBalance} mt={36} bgColor="blue">
           Check ERC-20 Token Balances
